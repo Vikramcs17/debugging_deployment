@@ -25,24 +25,24 @@ export const TypewriterEffect = ({
   });
 
   const [scope, animate] = useAnimate();
-  const isInView = useInView(scope);
+  const isInView = typeof window !== "undefined" ? useInView(scope) : false;
   useEffect(() => {
-    if (isInView) {
-      animate(
-        "span",
-        {
-          display: "inline-block",
-          opacity: 1,
-          width: "fit-content",
-        },
-        {
-          duration: 0.3,
-          delay: stagger(0.1),
-          ease: "easeInOut",
-        }
-      );
-    }
-  }, [isInView]);
+  if (typeof window !== "undefined" && isInView) {
+    animate(
+      "span",
+      {
+        display: "inline-block",
+        opacity: 1,
+        width: "fit-content",
+      },
+      {
+        duration: 0.3,
+        delay: stagger(0.1),
+        ease: "easeInOut",
+      }
+    );
+  }
+}, [isInView]);
 
   const renderWords = () => {
     return (
